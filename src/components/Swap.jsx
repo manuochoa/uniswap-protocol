@@ -291,7 +291,7 @@ const Swap = () => {
             <div className="d-flex justify-content-between align-items-center px-12x py-10x">
               <div className="subtitle">From</div>
               <div className="text-balance">
-                Balance: {inBalance / 10 ** trade.tokenIn.decimals}{" "}
+                Balance: <span className="numbers">{inBalance / 10 ** trade.tokenIn.decimals}</span>{" "}
                 {trade.tokenIn.symbol}
               </div>
             </div>
@@ -310,7 +310,7 @@ const Swap = () => {
                 value={trade.amountIn}
                 onChange={(e) => setValue(e.target.value, "from")}
                 type="text"
-                className="input-field ml-auto"
+                className="input-field ml-auto numbers"
                 placeholder="Enter Amount"
               />
             </div>
@@ -324,7 +324,7 @@ const Swap = () => {
             <div className="d-flex justify-content-between align-items-center px-12x py-10x">
               <div className="subtitle">To</div>
               <div className="text-balance">
-                Balance: {outBalance / 10 ** trade.tokenOut.decimals}{" "}
+                Balance: <span className="numbers">{outBalance / 10 ** trade.tokenOut.decimals}</span> {" "}
                 {trade.tokenOut.symbol}
               </div>
             </div>
@@ -343,7 +343,7 @@ const Swap = () => {
                 value={trade.amountOut}
                 onChange={(e) => setValue(e.target.value, "to")}
                 type="text"
-                className="input-field ml-auto"
+                className="input-field ml-auto numbers"
                 placeholder="Enter Amount"
               />
             </div>

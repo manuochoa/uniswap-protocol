@@ -3,9 +3,10 @@
 .title-h1{
   font-family: 'GlossySheenShine';
   color: #fff;
-  font-size: 78px;
+  font-size: 96px;
  text-align: center;
  margin-bottom: 30px;
+
 }
 
 iframe {
@@ -14,6 +15,7 @@ iframe {
 
 body {
   background: url(./img/common/background.png);
+  font-family: 'GlossySheenShine';
  
   /* background-color: #e5e5e5; */
 }
@@ -79,7 +81,7 @@ body {
 }
 
 .title {
-  font-family: "Quicksand";
+  /* font-family: "Quicksand"; */
   font-style: normal;
   font-weight: 800;
   font-size: 26px;
@@ -89,7 +91,7 @@ body {
 }
 
 .subtitle {
-  font-family: "Averta CY";
+  /* font-family: "Averta CY"; */
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -99,7 +101,7 @@ body {
 }
 
 .text-balance {
-  font-family: "Averta CY";
+  /* font-family: "Averta CY"; */
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -108,7 +110,7 @@ body {
 }
 
 .text-token {
-  font-family: "Averta CY";
+  /* font-family: "Averta CY"; */
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -136,8 +138,13 @@ body {
   border-radius: 12px;
 }
 
-.btn-text {
+.numbers{
   font-family: Averta CY;
+  font-weight: bold;
+}
+
+.btn-text {
+  /* font-family: Averta CY; */
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -169,6 +176,7 @@ body {
   top: 0px;
   right: 0px;
   display: flex;
+ 
   /* margin-bottom: 50px; */
   justify-content: center;
   align-items: center;
@@ -180,16 +188,17 @@ body {
 }
 
 .text-wallet {
-  font-family: Averta CY;
+  /* font-family: Averta CY; */
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
   line-height: 160%;
   text-align: center;
+  color: #fff;
 }
 
 .text-address {
-  font-family: Averta CY;
+  /* font-family: Averta CY; */
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
