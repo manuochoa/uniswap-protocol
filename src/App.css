@@ -223,6 +223,9 @@ body {
 }
 
 @media (max-width: 619px) {
+  .App{
+    width: 80% !important;
+  }
   .p-connecter{
     display: none;
     opacity: 0;
