@@ -15,7 +15,7 @@ iframe {
 
 body {
   background: url(./img/common/background.png);
-  font-family: 'GlossySheenShine';
+  font-family: 'AvertaCyrillicRegular';
  
   /* background-color: #e5e5e5; */
 }
@@ -139,7 +139,7 @@ body {
 }
 
 .numbers{
-  font-family: Averta CY;
+  font-family: "AvertaCyrillicRegular";
   font-weight: bold;
 }
 
@@ -207,4 +207,17 @@ body {
 
 .material-icons{
   color: #000;
+}
+
+.slippage-box{
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.slippage-button{
+  align-self: center;
 }

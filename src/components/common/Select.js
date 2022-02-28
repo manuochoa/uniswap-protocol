@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Enlarge from "../../icons/Enlarge";
+// import Enlarge from "../../icons/Enlarge";
 
 export default function Select({
   side,
@@ -35,7 +35,7 @@ export default function Select({
       <button className="select__button" onClick={toggleSelect}>
         <img src={selected.logoURI} alt="" className="select__button-icon" />
         <span className="select__button-text">{selected.symbol}</span>
-        <Enlarge className="select__button-arrows" />
+        {/* <Enlarge className="select__button-arrows" /> */}
       </button>
       <ul className="select__list">
         {list.map((item, index) => {

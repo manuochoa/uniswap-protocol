@@ -9,7 +9,7 @@ export const contractAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 async function ContratInterface(walletType) {
   let web3;
 
-  if (walletType === "Trust_wallet") {
+  if (walletType === "WalletConnect") {
     const provider = new WalletConnectProvider({
       rpc: {
         1: "https://rpc.ankr.com/eth",

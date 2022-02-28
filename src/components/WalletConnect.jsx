@@ -2,9 +2,11 @@ import React from "react";
 
 import { useWeb3Context } from "web3-react";
 
+
+
 const METAMASK = "MetaMask";
 
-const WalletConnect = () => {
+const WalletConnection = ({setPopupShowed, userAddress, disconnectWallet}) => {
 
   const context = useWeb3Context();
 
@@ -12,26 +14,35 @@ const WalletConnect = () => {
 
   console.log('[context]', context);
 
-  // if (context.active && context.connectorName === "WalletConnect") {
-  //   if (!context.account) {
-  //     WalletConnectQRCodeModal.open(
-  //       context.connector.walletConnector.uri,
-  //       () => {}
-  //     );
-  //   } else {
-  //     try {
-  //       WalletConnectQRCodeModal.close();
-  //     } catch {}
-  //   }
-  // }
+  
+
+      // if (context.active && context.connectorName === "WalletConnect") {
+      //   if (!context.account) {
+      //     WalletConnectQRCodeModal.open(
+      //       context.connector.walletConnector.uri,
+      //       () => {}
+      //     );
+      //   } else {
+      //     try {
+      //       WalletConnectQRCodeModal.close();
+      //     } catch {}
+      //   }
+      // }
 
 
   const onClick = () => {
-    if(active) {
-      context.unsetConnector();
-    } else {
-      context.setConnector(METAMASK);
-    }
+    console.log("hola")
+   if(!userAddress){
+    setPopupShowed(true)
+   }else {
+    disconnectWallet()
+   }
+   
+    // if(active) {
+    //   context.unsetConnector();
+    // } else {
+    //   context.setConnector(METAMASK);
+    // }
   };
 
   const getShortAddress = (address) => {
@@ -50,7 +61,7 @@ const WalletConnect = () => {
             className="btn-connecter border-0 text-wallet"
           >
             {
-              active ? getShortAddress(account) : "CONNECT WALLET"
+              userAddress ? getShortAddress(userAddress) : "CONNECT WALLET"
             }
           </button>
         </div>
@@ -67,4 +78,4 @@ const WalletConnect = () => {
   </>;
 };
 
-export default WalletConnect;
+export default WalletConnection;

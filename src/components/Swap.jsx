@@ -6,6 +6,7 @@ import { InfuraProvider } from "@ethersproject/providers";
 import Factory from "../abi/factory.json";
 import Router from "../abi/route2.json";
 import Pair from "../abi/pair.json";
+import Popup from "./common/Popup";
 
 import Erc20 from "../abi/erc20.json";
 import { useContract } from "../utils/useContract";
@@ -32,7 +33,7 @@ const USDC = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
 
 // [0x8e870d67f660d95d5be530380d0ec0bd388289e1, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48]
 
-const Swap = () => {
+const Swap = ({ walletType, userAddress, setPopupShowed }) => {
   const factoryContract = useContract(C_FACTORY, Factory);
   const routerContract = useContract(C_ROUTER, Router);
   const pairContract = useContract(C_PAIR, Pair);
@@ -41,9 +42,10 @@ const Swap = () => {
   console.log("[erc20]", erc20);
 
   const context = useWeb3Context();
-  const { active, connectorName, account, networkId } = context;
+  const { active, networkId } = context;
   window.acc = factoryContract;
   const [isLoading, setIsLoading] = useState(false);
+  const [settingSlippage, isSettingSlippage] = useState(false);
   const [inBalance, setInBalance] = useState("");
   const [outBalance, setOutBalance] = useState("");
   const [enoughAllowance, setEnoughAllowance] = useState(true);
@@ -99,7 +101,7 @@ const Swap = () => {
       let amountOutMin = ((100 - trade.slippage) * amountOut) / 100;
       setTrade({ ...trade, amountIn: num, amountOut, amountOutMin });
     } else {
-      const value = Moralis.Units.Token(num, trade.tokenIn.decimals);
+      const value = Number(num * 10 ** trade.tokenOut.decimals).toString();
       let amountIn = await quote(value, side);
       let amountOutMin = ((100 - trade.slippage) * num) / 100;
       setTrade({ ...trade, amountOut: num, amountIn, amountOutMin });
@@ -119,7 +121,7 @@ const Swap = () => {
     });
   };
 
-  //amount, path, connectorName, quoteType
+  //amount, path, walletType, quoteType
   const quote = async (value, side) => {
     if (value <= 0) {
       return 0;
@@ -128,7 +130,7 @@ const Swap = () => {
       let result = await getQuote(
         value,
         [trade.tokenIn.address, trade.tokenOut.address],
-        connectorName,
+        walletType,
         "amountOut"
       );
       console.log(result);
@@ -140,7 +142,7 @@ const Swap = () => {
       let result = await getQuote(
         value,
         [trade.tokenIn.address, trade.tokenOut.address],
-        connectorName,
+        walletType,
         "amountIn"
       );
       return (result[0] / 10 ** trade.tokenIn.decimals).toFixed(4);
@@ -152,8 +154,8 @@ const Swap = () => {
       setEnoughAllowance(true);
     } else {
       let allowance = await checkAllowance(
-        connectorName,
-        account,
+        walletType,
+        userAddress,
         trade.tokenIn.address
       );
 
@@ -167,7 +169,7 @@ const Swap = () => {
 
   const handleApprove = async () => {
     setIsLoading(true);
-    let receipt = await Approve(connectorName, account, trade.tokenIn.address);
+    let receipt = await Approve(walletType, userAddress, trade.tokenIn.address);
     if (receipt) {
       checkTokenAllowance();
     }
@@ -184,8 +186,8 @@ const Swap = () => {
 
   const initSwap = async () => {
     setIsLoading(true);
-    let amountIn = trade.amountIn * 10 ** trade.tokenIn.decimals;
-    let amountOutMin = trade.amountOutMin * 10 ** trade.tokenOut.decimals;
+    let amountIn = truncateToDecimals(trade.amountIn * 10 ** trade.tokenIn.decimals,0);
+    let amountOutMin = truncateToDecimals(trade.amountOutMin * 10 ** trade.tokenOut.decimals,0);
     let exchangeType;
     if (trade.tokenIn.name === "ETH") {
       exchangeType = "ETHtoToken";
@@ -199,9 +201,9 @@ const Swap = () => {
       amountIn,
       amountOutMin,
       [trade.tokenIn.address, trade.tokenOut.address],
-      account,
+      userAddress,
       Date.now() + 1000 * 60 * 10,
-      connectorName,
+      walletType,
       exchangeType
     );
 
@@ -213,24 +215,24 @@ const Swap = () => {
   };
 
   const getUserBalance = async () => {
-    if (account) {
+    if (userAddress) {
       let inBalance;
       let outBalance;
       if (trade.tokenIn.name === "ETH") {
-        inBalance = await getNativeBalance(account);
+        inBalance = await getNativeBalance(userAddress);
       } else {
         inBalance = await checkBalance(
-          connectorName,
-          account,
+          walletType,
+          userAddress,
           trade.tokenIn.address
         );
       }
       if (trade.tokenOut.name === "ETH") {
-        outBalance = await getNativeBalance(account);
+        outBalance = await getNativeBalance(userAddress);
       } else {
         outBalance = await checkBalance(
-          connectorName,
-          account,
+          walletType,
+          userAddress,
           trade.tokenOut.address
         );
       }
@@ -247,13 +249,10 @@ const Swap = () => {
     }
   };
 
-  const connectWallet = () => {
-    if (active) {
-      context.unsetConnector();
-    } else {
-      context.setConnector("MetaMask");
-    }
-  };
+  function truncateToDecimals(num, dec) {
+    const calcDec = Math.pow(10, dec);
+    return Math.trunc(num * calcDec) / calcDec;
+  }
 
   useEffect(() => {
     checkTokenAllowance();
@@ -263,7 +262,7 @@ const Swap = () => {
   useEffect(() => {
     getUserBalance();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trade.tokenIn, trade.tokenOut, account]);
+  }, [trade.tokenIn, trade.tokenOut, userAddress]);
 
   return (
     <>
@@ -279,6 +278,7 @@ const Swap = () => {
               <button
                 className="p-0 border-0 bg-transparent hover-op"
                 style={{ marginLeft: 18 }}
+                onClick={() => isSettingSlippage(true)}
               >
                 <i className="material-icons material-icons-outlined color-icon">
                   settings
@@ -291,7 +291,10 @@ const Swap = () => {
             <div className="d-flex justify-content-between align-items-center px-12x py-10x">
               <div className="subtitle">From</div>
               <div className="text-balance">
-                Balance: <span className="numbers">{inBalance / 10 ** trade.tokenIn.decimals}</span>{" "}
+                Balance:{" "}
+                <span className="numbers">
+                  {Number(inBalance).toFixed(4)}
+                </span>{" "}
                 {trade.tokenIn.symbol}
               </div>
             </div>
@@ -309,7 +312,7 @@ const Swap = () => {
               <input
                 value={trade.amountIn}
                 onChange={(e) => setValue(e.target.value, "from")}
-                type="text"
+                type="number"
                 className="input-field ml-auto numbers"
                 placeholder="Enter Amount"
               />
@@ -317,14 +320,19 @@ const Swap = () => {
           </div>
 
           <div className="d-flex w-100 justify-content-center my-3">
-            <i onClick={changeSides} className="material-icons">arrow_downward</i>
+            <i onClick={changeSides} className="material-icons">
+              arrow_downward
+            </i>
           </div>
 
           <div className="bg-card rounded-12 mt-4">
             <div className="d-flex justify-content-between align-items-center px-12x py-10x">
               <div className="subtitle">To</div>
               <div className="text-balance">
-                Balance: <span className="numbers">{outBalance / 10 ** trade.tokenOut.decimals}</span> {" "}
+                Balance:{" "}
+                <span className="numbers">
+                  {Number(outBalance ).toFixed(4)}
+                </span>{" "}
                 {trade.tokenOut.symbol}
               </div>
             </div>
@@ -342,7 +350,7 @@ const Swap = () => {
               <input
                 value={trade.amountOut}
                 onChange={(e) => setValue(e.target.value, "to")}
-                type="text"
+                type="number"
                 className="input-field ml-auto numbers"
                 placeholder="Enter Amount"
               />
@@ -350,9 +358,13 @@ const Swap = () => {
           </div>
 
           <div style={{ marginTop: 40 }}>
-            {account ? (
+            {userAddress ? (
               <button
-                disabled={enoughAllowance ? Number(trade.amountIn) >= Number(inBalance) : false}
+                disabled={
+                  enoughAllowance
+                    ? Number(trade.amountIn) >= Number(inBalance)
+                    : false
+                }
                 onClick={
                   !enoughAllowance ? () => handleApprove() : () => initSwap()
                 }
@@ -372,7 +384,7 @@ const Swap = () => {
               </button>
             ) : (
               <button
-                onClick={connectWallet}
+                onClick={() => setPopupShowed(true)}
                 className="w-100 btn-connect border-0 text-white d-flex justify-content-center align-items-center hover-op"
               >
                 <div className="btn-text ml-2">Connect Wallet</div>
@@ -381,6 +393,27 @@ const Swap = () => {
           </div>
         </div>
       </div>
+      <Popup
+        popupShowed={settingSlippage}
+        setPopupShowed={isSettingSlippage}
+        className={"popup--connect"}
+      >
+       
+          <div className="slippage-box">
+            <h3>Slippage</h3>
+            <input
+              value={trade.slippage}
+              onChange={(e) => setTrade({ ...trade, slippage: e.target.value })}
+              type="number"
+              className="input-field numbers"
+              placeholder="Enter Slippage"
+            />
+          
+          <button  onClick={() => isSettingSlippage(false)} className="btn-connecter border-0 text-wallet slippage-button">
+            Accept
+          </button>
+        </div>
+      </Popup>
     </>
   );
 };
