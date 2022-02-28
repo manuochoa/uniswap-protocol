@@ -221,3 +221,10 @@ body {
 .slippage-button{
   align-self: center;
 }
+
+@media (max-width: 619px) {
+  .p-connecter{
+    display: none;
+    opacity: 0;
+  }
+}
