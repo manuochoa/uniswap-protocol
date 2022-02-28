@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "GlossySheenOutline";
+  src: url("GlossySheenOutline-X35n2.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GlossySheenRegular";
+  src: url("GlossySheenRegular-L35oy.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GlossySheenShadow";
+  src: url("GlossySheenShadow-gxJP3.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GlossySheenShine";
+  src: url("GlossySheenShine-ow6Wq.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

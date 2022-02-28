@@ -1,0 +1,151 @@
+/*-------- Button --------*/
+
+.button {
+    height: 64px;
+    padding: 0 32px;
+
+    border-radius: 12px;
+    
+    font-family: $font-sb;
+    color: #ffffff;
+    font-size: 14px;
+
+    transition: all 0.3s ease-out;
+
+    &__icon {
+        margin-right: 6px;
+        transition: color 0.3s ease-out;
+    }
+
+    &__icon:only-child {
+        margin: 0;
+    }
+
+    span + &__icon {
+        margin-left: 6px;
+    }
+}
+
+.button {
+
+    &--red {
+        background-color: $red;
+        border: 1px solid transparent;
+    }
+
+    &--red:hover, &--red.active {
+        background-color: transparent;
+        border: 1px solid $red;
+        color: $red;
+    }
+}
+
+.button {
+
+    &--white {
+        background-color: #ffffff;
+        color: $black1;
+    }
+}
+
+.button {
+
+    &--header {
+        height: 48px;
+        width: 224px;
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+}
+
+.button {
+
+    &--more {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+    }
+
+    &--more:hover &__icon {
+        color: $red;
+    }
+}
+
+.button {
+
+    &--form {
+        width: 100%;
+        font-size: 18px;
+    }
+}
+
+.button {
+
+    &--round {
+        width: 48px;
+        height: 48px;
+
+        padding: 0;
+
+        background: #1B1A1A;
+        border-radius: 50%;
+        color: #ffffff;
+    }
+
+    &--round:hover {
+        background: #242323;  
+    }
+}
+
+.button {
+
+    &--plus:hover &__icon {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .button {
+
+        &--more {
+            width: 40px;
+            height: 32px;
+
+            background: #202226;
+            border: 1px solid #484545;
+            border-radius: 6px;
+        }
+    }
+
+    .button {
+
+        &--header {
+            max-width: 155px;
+            height: 36px;
+            margin: 0 10px;
+            padding: 0 20px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+    }
+}
+
+@media (max-width: 619px) {
+
+    .button {
+
+        &--round {
+            width: 36px;
+            height: 36px;
+        }
+    }
+
+    .button {
+
+        &--form {
+            height: 48px;
+            font-size: 14px;
+        }
+    }
+}

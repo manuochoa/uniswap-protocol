@@ -1,0 +1,16 @@
+/*-------- Style --------*/
+
+/*-------- Fonts --------*/
+$font-r: "Poppins-Regular";
+$font-m: "Poppins-Medium";
+$font-sb: "Poppins-Sb";
+$font-stx: "STXinwei";
+
+/*-------- Colors --------*/
+$black1: #1A1A1A;
+$red: #E72D2D;
+$lightBlack: rgba(32, 34, 38, 0.8);
+$grey: rgba(255, 255, 255, 0.5);
+
+/*-------- Components --------*/
+@import './components/components.scss';
