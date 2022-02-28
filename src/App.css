@@ -230,11 +230,11 @@ body {
     display: none;
     opacity: 0;
   }
-  .container{
+  .main-container{
     width: 100%;
   }
 
-  .container h1{
+  .main-container h1{
     font-size: 66px;
   }
 }
