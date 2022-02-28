@@ -237,4 +237,8 @@ body {
   .main-container h1{
     font-size: 66px;
   }
+
+  .input-field {
+    width: 100%;
+  }
 }
