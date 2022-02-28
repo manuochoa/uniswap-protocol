@@ -272,9 +272,9 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
           <div className="d-flex justify-content-between align-items-center">
             <h2 className="title">Swap</h2>
             <div className="d-flex ml-auto">
-              <button className="p-0 border-0 bg-transparent hover-op">
+              {/* <button className="p-0 border-0 bg-transparent hover-op">
                 <i className="material-icons color-icon">history</i>
-              </button>
+              </button> */}
               <button
                 className="p-0 border-0 bg-transparent hover-op"
                 style={{ marginLeft: 18 }}
