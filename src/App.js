@@ -96,7 +96,7 @@ function App() {
     <div className="App w-100 d-flex flex-column justify-content-center align-items-center py-5">
       <WalletConnect disconnectWallet={disconnectWallet} userAddress={userAddress} setPopupShowed={setPopupShowed} setConnected={setConnected} />
 
-      <div className='mt-3'>
+      <div className='mt-3 container'>
         <Swap   setPopupShowed={setPopupShowed} userAddress={userAddress}  walletType={walletType} />
       </div>
       <ConnectPopup

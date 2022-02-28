@@ -224,10 +224,17 @@ body {
 
 @media (max-width: 619px) {
   .App{
-    width: 80% !important;
+    padding: 10px;
   }
   .p-connecter{
     display: none;
     opacity: 0;
+  }
+  .container{
+    width: 100%;
+  }
+
+  .container h1{
+    font-size: 66px;
   }
 }
