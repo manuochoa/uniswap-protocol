@@ -13,7 +13,17 @@ iframe {
 }
 
 body {
+  background: url(./img/common/background.png);
+ 
   /* background-color: #e5e5e5; */
+}
+
+#background{
+  -webkit-transform: rotate(30deg);
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+  transform: rotate(30deg);
 }
 
 .bg-yell {
