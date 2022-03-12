@@ -97,7 +97,7 @@ export default function Select({
             onPaste={(e) => searchInput(e.target.value)}
             type="text"
             className="input-field ml-auto numbers"
-            placeholder="Enter Amount"
+            placeholder="Enter Token Symbol or Address"
           />
         </li>
         {tokenList.map((item, index) => {
