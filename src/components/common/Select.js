@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import notFound from "../../img/notFound.svg";
 import Moralis from "moralis";
 const serverUrl = "https://il4hsrq5ab2i.moralisweb3.com:2053/server";
 const appId = "3RsVK4dZSBxm5p5EnkN9iWooV64bQtoIPbDInCeZ";
@@ -85,7 +86,11 @@ export default function Select({
   return (
     <div className={"select " + (className || "") + (opened ? " opened" : "")}>
       <button className="select__button" onClick={toggleSelect}>
-        <img src={selected.logoURI} alt="" className="select__button-icon" />
+        <img
+          src={selected.logoURI ? selected.logoURI : notFound}
+          alt=""
+          className="select__button-icon"
+        />
         <span className="select__button-text">{selected.symbol}</span>
         {/* <Enlarge className="select__button-arrows" /> */}
       </button>
@@ -111,7 +116,7 @@ export default function Select({
                 }}
               >
                 <img
-                  src={item.logoURI}
+                  src={item.logoURI ? item.logoURI : notFound}
                   alt=""
                   className="select__button-icon"
                 />
