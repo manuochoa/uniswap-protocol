@@ -187,6 +187,11 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
 
   const initSwap = async () => {
     setIsLoading(true);
+    console.log(
+      trade.tokenIn.decimals,
+      trade.tokenOut.decimals,
+      trade.amountOutMin
+    );
     let amountIn = ethers.utils.parseUnits(
       Number(trade.amountIn).toString(),
       trade.tokenIn.decimals
@@ -195,6 +200,7 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
       Number(trade.amountOutMin).toString(),
       trade.tokenOut.decimals
     );
+    console.log("trading amounts", amountIn, amountOutMin);
     let exchangeType;
     if (trade.tokenIn.name === "ETH") {
       exchangeType = "ETHtoToken";
