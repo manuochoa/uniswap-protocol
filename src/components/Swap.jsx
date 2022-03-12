@@ -405,7 +405,15 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
           <h3>Slippage</h3>
           <input
             value={trade.slippage}
-            onChange={(e) => setTrade({ ...trade, slippage: e.target.value })}
+            onChange={(e) =>
+              setTrade({
+                ...trade,
+                amountIn: "",
+                amountOut: "",
+                amountOutMin: "",
+                slippage: e.target.value,
+              })
+            }
             type="number"
             className="input-field numbers"
             placeholder="Enter Slippage"
