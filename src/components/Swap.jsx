@@ -188,11 +188,11 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
   const initSwap = async () => {
     setIsLoading(true);
     let amountIn = ethers.utils.parseUnits(
-      trade.amountIn,
+      Number(trade.amountIn).toString(),
       trade.tokenIn.decimals
     );
     let amountOutMin = ethers.utils.parseUnits(
-      trade.amountOutMin,
+      Number(trade.amountOutMin).toString(),
       trade.tokenOut.decimals
     );
     let exchangeType;
