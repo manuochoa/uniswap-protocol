@@ -134,6 +134,10 @@
 
 @media (max-width: 619px) {
   .select {
+    &__list {
+      width: 240px;
+    }
+
     &--form {
       width: 104px;
       margin-top: 18px;

@@ -7,6 +7,7 @@ import Factory from "../abi/factory.json";
 import Router from "../abi/route2.json";
 import Pair from "../abi/pair.json";
 import Popup from "./common/Popup";
+import mochiLogo from "../img/mochi.png";
 
 import Erc20 from "../abi/erc20.json";
 import { useContract } from "../utils/useContract";
@@ -68,12 +69,11 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
         "https://assets.trustwalletapp.com/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
     },
     tokenOut: {
-      address: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      name: "Tether",
-      symbol: "USDT",
-      decimals: 6,
-      logoURI:
-        "https://assets.trustwalletapp.com/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png",
+      address: "0x8f62795dfa0bac8f13759a241eb29e6d886a6979",
+      name: "MOCHI",
+      symbol: "MOCHI",
+      decimals: 18,
+      logoURI: mochiLogo,
     },
   });
 
@@ -186,8 +186,14 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
 
   const initSwap = async () => {
     setIsLoading(true);
-    let amountIn = truncateToDecimals(trade.amountIn * 10 ** trade.tokenIn.decimals,0);
-    let amountOutMin = truncateToDecimals(trade.amountOutMin * 10 ** trade.tokenOut.decimals,0);
+    let amountIn = truncateToDecimals(
+      trade.amountIn * 10 ** trade.tokenIn.decimals,
+      0
+    );
+    let amountOutMin = truncateToDecimals(
+      trade.amountOutMin * 10 ** trade.tokenOut.decimals,
+      0
+    );
     let exchangeType;
     if (trade.tokenIn.name === "ETH") {
       exchangeType = "ETHtoToken";
@@ -292,9 +298,7 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
               <div className="subtitle">From</div>
               <div className="text-balance">
                 Balance:{" "}
-                <span className="numbers">
-                  {Number(inBalance).toFixed(4)}
-                </span>{" "}
+                <span className="numbers">{Number(inBalance).toFixed(4)}</span>{" "}
                 {trade.tokenIn.symbol}
               </div>
             </div>
@@ -330,9 +334,7 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
               <div className="subtitle">To</div>
               <div className="text-balance">
                 Balance:{" "}
-                <span className="numbers">
-                  {Number(outBalance ).toFixed(4)}
-                </span>{" "}
+                <span className="numbers">{Number(outBalance).toFixed(4)}</span>{" "}
                 {trade.tokenOut.symbol}
               </div>
             </div>
@@ -398,18 +400,20 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
         setPopupShowed={isSettingSlippage}
         className={"popup--connect"}
       >
-       
-          <div className="slippage-box">
-            <h3>Slippage</h3>
-            <input
-              value={trade.slippage}
-              onChange={(e) => setTrade({ ...trade, slippage: e.target.value })}
-              type="number"
-              className="input-field numbers"
-              placeholder="Enter Slippage"
-            />
-          
-          <button  onClick={() => isSettingSlippage(false)} className="btn-connecter border-0 text-wallet slippage-button">
+        <div className="slippage-box">
+          <h3>Slippage</h3>
+          <input
+            value={trade.slippage}
+            onChange={(e) => setTrade({ ...trade, slippage: e.target.value })}
+            type="number"
+            className="input-field numbers"
+            placeholder="Enter Slippage"
+          />
+
+          <button
+            onClick={() => isSettingSlippage(false)}
+            className="btn-connecter border-0 text-wallet slippage-button"
+          >
             Accept
           </button>
         </div>
