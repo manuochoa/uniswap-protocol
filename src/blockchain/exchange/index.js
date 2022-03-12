@@ -5,7 +5,6 @@ import ContratInterface, {
 import tokenInterface from "../interface/tokenInterface";
 import factoryInterface from "../interface/factoryInterface";
 
-
 export const swap = async (
   amountIn,
   amountOutMin,
@@ -18,6 +17,8 @@ export const swap = async (
   try {
     let myContract = await ContratInterface(walletType);
     let receipt;
+
+    console.log(amountIn.toString(), amountOutMin.toString(), "amounts");
 
     if (exchangeType === "ETHtoToken") {
       receipt = await myContract.methods
@@ -68,7 +69,7 @@ export const getQuote = async (amount, path, walletType, quoteType) => {
   try {
     let myContract = await ContratInterface(walletType);
     let receipt;
-    console.log(amount, path, walletType, quoteType)
+    console.log(amount, path, walletType, quoteType);
 
     if (quoteType === "amountIn") {
       if (
@@ -114,21 +115,20 @@ export const Approve = async (walletType, userAddress, address) => {
 };
 
 export const checkAllowance = async (walletType, userAddress, address) => {
-  if(userAddress){
+  if (userAddress) {
     try {
       let myContract = await tokenInterface(walletType, address);
       let receipt = await myContract.methods
         .allowance(userAddress, contractAddress)
         .call();
-  
+
       return receipt;
     } catch (error) {
       console.log(error);
     }
-  }else {
-    console.log("no user")
+  } else {
+    console.log("no user");
   }
-  
 };
 
 export const checkBalance = async (walletType, userAddress, address) => {
@@ -170,10 +170,3 @@ export const getPair = async (tokenA, tokenB, walletType) => {
 
   return { pairAddress, tokenAreserve, tokenBreserve, supply };
 };
-
-
-
-
-
-
-

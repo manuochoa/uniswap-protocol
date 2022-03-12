@@ -100,6 +100,7 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
       let amountOut = await quote(value, side);
       let amountOutMin = ((100 - trade.slippage) * amountOut) / 100;
       setTrade({ ...trade, amountIn: num, amountOut, amountOutMin });
+      console.log(value, amountOut, amountOutMin, "amounts");
     } else {
       const value = Number(num * 10 ** trade.tokenOut.decimals).toString();
       let amountIn = await quote(value, side);
@@ -186,13 +187,13 @@ const Swap = ({ walletType, userAddress, setPopupShowed }) => {
 
   const initSwap = async () => {
     setIsLoading(true);
-    let amountIn = truncateToDecimals(
-      trade.amountIn * 10 ** trade.tokenIn.decimals,
-      0
+    let amountIn = ethers.utils.parseUnits(
+      trade.amountIn,
+      trade.tokenIn.decimals
     );
-    let amountOutMin = truncateToDecimals(
-      trade.amountOutMin * 10 ** trade.tokenOut.decimals,
-      0
+    let amountOutMin = ethers.utils.parseUnits(
+      trade.amountOutMin,
+      trade.tokenOut.decimals
     );
     let exchangeType;
     if (trade.tokenIn.name === "ETH") {
